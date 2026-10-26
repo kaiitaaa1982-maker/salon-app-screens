@@ -1,96 +1,51 @@
 <!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="color-scheme" content="light">
-  <meta name="description" content="美容室の業務アプリの画面、移り方、役割と表示の型を、現在の実装から確認するための案内。">
-  <title>画面の案内｜美容室の業務アプリ</title>
-  <link rel="stylesheet" href="style.css?v=2">
-  <script src="app.js?v=2" defer></script>
-</head>
-<body>
-<a class="skip" href="#main">本文へ</a>
-<header class="mast"><a href="#" class="brand"><span class="brand-mark" aria-hidden="true">美</span>美容室の業務アプリ<span class="brand-note">画面の案内</span></a><span class="edition">実装確認版 <time datetime="2026-10-26">2026.10.26</time></span></header>
-<div class="shell">
-<aside class="sidebar"><p class="side-label">この案内でわかること</p><nav aria-label="目次"><a href="#overview"><span>01</span>画面の一覧</a><a href="#flow"><span>02</span>画面の移り方</a><a href="#roles"><span>03</span>役割の違い</a><a href="#patterns"><span>04</span>表示の型</a><a href="#status"><span>05</span>準備中・確認範囲</a></nav><div class="side-note">画面と権限は現在の実装に基づきます。<br>画像はあとから差し替えられます。</div></aside>
-<main id="main">
-<section class="hero"><p class="eyebrow">画面と操作を、ひと続きに。</p><h1>どこから入り、<br>何が見えるか。</h1><p class="lead">予約からお会計、カルテ、会社の数字まで。<br class="wide-only">美容室の業務アプリの画面の移り方と、端末ごとの表示をまとめました。</p><div class="hero-foot"><a class="primary" href="#flow">画面の流れを見る <span aria-hidden="true">↗</span></a><dl class="metrics"><div><dt>画面</dt><dd>27<span>件</span></dd></div><div><dt>役割</dt><dd>3<span>種</span></dd></div><div><dt>表示</dt><dd>3<span>幅</span></dd></div></dl></div><div class="hero-index" aria-hidden="true">予約 <span>→</span> お会計 <span>→</span> カルテ<br><small>日々の仕事から、共有と経営へ。</small></div></section>
-
-<section id="overview" class="section"><div class="section-head"><div><p class="eyebrow">01 / 画面の一覧</p><h2>目的から、画面を探す。</h2></div><p>27画面＋入口の転送1件。<br>URLはドメインを省いたパスです。</p></div>
-<p class="note">全画面のうち、ログイン以外はスタッフの認証が必要です。「見られる範囲」は画面の枠とデータの権限を分けて記載しています。URL中の <code>[customerId]</code>・<code>[storeId]</code>・<code>[id]</code> は対象の識別子です。</p>
-<div class="table-wrap"><table class="catalog"><caption>画面名・URL・閲覧範囲・入口</caption><thead><tr><th scope="col">ID・画面名</th><th scope="col">URL</th><th scope="col">誰が見られるか</th><th scope="col">入口・操作</th></tr></thead><tbody>
-<tr><th scope="row"><small>入口</small>トップ</th><td><code>/</code></td><td>予約へ転送。未ログインならログインへ</td><td>アプリを開く</td></tr>
-</tbody><tbody id="screen-rows"></tbody></table></div>
-<noscript><p class="notice">画面一覧と画像枠の表示にはJavaScriptを有効にしてください。遷移図・権限表・表示の説明はこのまま読めます。</p></noscript>
-</section>
-
-<section id="flow" class="section"><div class="section-head"><div><p class="eyebrow">02 / 画面の移り方</p><h2>仕事の流れを、たどる。</h2></div><span class="pill">実線：現在の導線</span></div><p>業務の順に並べた図です。すべての役割がすべての画面を開けるわけではありません。途中のナビ操作も矢印に記載しています。予約詳細の「カルテ」、ナビ「お客様」からもカルテへ進めます。経営者の代理引継ぎは「不在」→影響する予約→「引継ぎ」が入口です。</p>
-<div class="flow-panel"><svg class="flow" viewBox="0 0 920 1160" role="img" aria-labelledby="flow-title flow-desc"><title id="flow-title">ログインから予約、会計、カルテ、共有、会社の画面への流れ</title><desc id="flow-desc">ログイン後は経営者・店長・スタイリストとも予約が最初の画面。レジで会計を開き、詳しくでカルテへ。カルテ内で引継ぎ、自分と共有のリンクで共有管理へ進む。自分へ戻り、会社から口座へ。店のチャットへの矢印は未実装のため点線。</desc>
-<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#4e5e38" stroke-width="1.4"/></marker></defs>
-<g class="flow-lines" fill="none" stroke="#4e5e38" stroke-width="1.5" marker-end="url(#arrow)"><path d="M460 86V128"/><path d="M460 213V255"/><path d="M460 340V382"/><path d="M460 467V509"/><path d="M460 594V636"/><path d="M460 721V763"/><path d="M460 848V890"/><path d="M640 932H714"/><path d="M460 975V1033" stroke-dasharray="6 6"/></g>
-<g class="flow-node"><rect x="280" y="20" width="360" height="66" rx="14"/><text x="460" y="48">ログイン</text><text class="sub" x="460" y="70">/login</text></g>
-<g class="flow-node"><rect x="170" y="128" width="580" height="85" rx="14"/><text x="460" y="159">全役割の最初の画面：予約</text><text class="sub" x="460" y="184">経営者は全店 ／ 店長・スタイリストは所属店</text></g>
-<g class="flow-node"><rect x="280" y="255" width="360" height="85" rx="14"/><text x="460" y="287">予約</text><text class="sub" x="460" y="312">空き枠 → 作成 ／ 予約 → 詳細</text></g>
-<g class="flow-node"><rect x="280" y="382" width="360" height="85" rx="14"/><text x="460" y="414">お会計</text><text class="sub" x="460" y="439">現金・PayPay ／ 記録できる人だけ</text></g>
-<g class="flow-node"><rect x="280" y="509" width="360" height="85" rx="14"/><text x="460" y="541">カルテ</text><text class="sub" x="460" y="566">前回・見せる・来店履歴・写真</text></g>
-<g class="flow-node"><rect x="280" y="636" width="360" height="85" rx="14"/><text x="460" y="668">引継ぎと共有</text><text class="sub" x="460" y="693">カルテ末尾の引継ぎ ／ /me/shares</text></g>
-<g class="flow-node"><rect x="280" y="763" width="360" height="85" rx="14"/><text x="460" y="795">自分の成績</text><text class="sub" x="460" y="820">/me ／ 売上・目標・本人の給与など</text></g>
-<g class="flow-node"><rect x="280" y="890" width="360" height="85" rx="14"/><text x="460" y="922">会社の損益・貸借</text><text class="sub" x="460" y="947">/company ／ 社員は同意の範囲</text><rect x="724" y="900" width="170" height="66" rx="14"/><text x="809" y="929">口座</text><text class="sub" x="809" y="951">経営者のみ</text></g>
-<g class="flow-node pending"><rect x="280" y="1033" width="360" height="85" rx="14"/><text x="460" y="1065">店のチャット · 準備中</text><text class="sub" x="460" y="1090">土台のAPIのみ。画面・入口はまだない</text></g>
-<g class="edge-label"><text x="477" y="113">「ログイン」</text><text x="477" y="240">カレンダーを表示</text><text x="477" y="367">ナビ「レジ」※所属がある場合</text><text x="477" y="494">会計行の「詳しく」※表示対象のみ</text><text x="477" y="621">「引継ぎ」／ ナビ「自分」→「共有」</text><text x="477" y="748">ナビ「自分」</text><text x="477" y="875">ナビ「会社」</text><text x="656" y="888">「口座」</text><text x="477" y="1008">遷移なし・画面未実装</text></g>
-<g class="flow-note"><text x="18" y="288">別の入口</text><text x="18" y="316">ナビ「お客様」</text><text x="18" y="340">→ カルテ</text><text x="18" y="413">予約の詳細</text><text x="18" y="437">→「カルテ」</text><text x="18" y="542">経営者の代理引継ぎ</text><text x="18" y="566">「不在」→ 影響する予約</text><text x="18" y="590">→「引継ぎ」</text></g>
-</svg><svg class="flow-mobile" viewBox="0 0 360 1370" role="img" aria-labelledby="mobile-title mobile-desc"><title id="mobile-title">画面の流れ・スマホ向けの図</title><desc id="mobile-desc">全役割が予約から始まり、レジ、カルテ、共有、自分、会社へ。会社の口座は経営者のみ。チャットへは遷移できません。</desc><defs><marker id="mobile-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#4e5e38" stroke-width="1.4"/></marker></defs><g class="mobile-node"><rect x="15" y="15" width="330" height="76" rx="12"/><text x="180" y="45" class="mobile-title">ログイン</text><text x="180" y="69" class="mobile-sub">/login</text></g><path d="M40 92V141" stroke="#4e5e38" fill="none" marker-end="url(#mobile-arrow)"/><text x="55" y="126" class="mobile-edge">「ログイン」</text><g class="mobile-node"><rect x="15" y="152" width="330" height="76" rx="12"/><text x="180" y="182" class="mobile-title">全役割の最初の画面：予約</text><text x="180" y="206" class="mobile-sub">経営者は全店／ほかは所属店</text></g><path d="M40 229V278" stroke="#4e5e38" fill="none" marker-end="url(#mobile-arrow)"/><text x="55" y="263" class="mobile-edge">カレンダーを表示</text><g class="mobile-node"><rect x="15" y="289" width="330" height="76" rx="12"/><text x="180" y="319" class="mobile-title">予約</text><text x="180" y="343" class="mobile-sub">空き枠 → 作成／予約 → 詳細</text></g><path d="M40 366V415" stroke="#4e5e38" fill="none" marker-end="url(#mobile-arrow)"/><text x="55" y="400" class="mobile-edge">ナビ「レジ」※所属がある場合</text><g class="mobile-node"><rect x="15" y="426" width="330" height="76" rx="12"/><text x="180" y="456" class="mobile-title">お会計</text><text x="180" y="480" class="mobile-sub">保存できる人に支払ボタン</text></g><path d="M40 503V552" stroke="#4e5e38" fill="none" marker-end="url(#mobile-arrow)"/><text x="55" y="537" class="mobile-edge">会計行の「詳しく」※対象者のみ</text><g class="mobile-node"><rect x="15" y="563" width="330" height="76" rx="12"/><text x="180" y="593" class="mobile-title">カルテ</text><text x="180" y="617" class="mobile-sub">前回・見せる・来店履歴・写真</text></g><path d="M40 640V689" stroke="#4e5e38" fill="none" marker-end="url(#mobile-arrow)"/><text x="55" y="674" class="mobile-edge">末尾「引継ぎ」／「自分」→「共有」</text><g class="mobile-node"><rect x="15" y="700" width="330" height="76" rx="12"/><text x="180" y="730" class="mobile-title">引継ぎと共有</text><text x="180" y="754" class="mobile-sub">/me/shares で共有等の管理</text></g><path d="M40 777V826" stroke="#4e5e38" fill="none" marker-end="url(#mobile-arrow)"/><text x="55" y="811" class="mobile-edge">ナビ「自分」</text><g class="mobile-node"><rect x="15" y="837" width="330" height="76" rx="12"/><text x="180" y="867" class="mobile-title">自分の成績</text><text x="180" y="891" class="mobile-sub">本人の売上・目標・給与など</text></g><path d="M40 914V963" stroke="#4e5e38" fill="none" marker-end="url(#mobile-arrow)"/><text x="55" y="948" class="mobile-edge">ナビ「会社」</text><g class="mobile-node"><rect x="15" y="974" width="330" height="76" rx="12"/><text x="180" y="1004" class="mobile-title">会社の損益・貸借</text><text x="180" y="1028" class="mobile-sub">社員は同意のそろった段まで</text></g><path d="M40 1051V1100" stroke="#4e5e38" fill="none" marker-end="url(#mobile-arrow)"/><text x="55" y="1085" class="mobile-edge">会社の「口座」※経営者のみ</text><g class="mobile-node"><rect x="15" y="1111" width="330" height="76" rx="12"/><text x="180" y="1141" class="mobile-title">口座</text><text x="180" y="1165" class="mobile-sub">/company/bank</text></g><path d="M40 1188V1237" stroke="#4e5e38" fill="none" marker-end="url(#mobile-arrow)" stroke-dasharray="5 5"/><text x="55" y="1222" class="mobile-edge">遷移なし・画面未実装</text><g class="mobile-node pending"><rect x="15" y="1248" width="330" height="76" rx="12"/><text x="180" y="1278" class="mobile-title">店のチャット · 準備中</text><text x="180" y="1302" class="mobile-sub">土台のAPIのみ。画面なし</text></g></svg></div>
-<div class="two-col"><div class="callout"><h3>予約とカルテは、権限が別</h3><p>予約の詳細からカルテへ進めても、共有や引継ぎなどの根拠がなければ閲覧は拒否されます。経営者という役割だけでは、カルテは開けません。</p></div><div class="callout"><h3>お会計は専用の画面</h3><p>予約から直接お会計へ送るボタンはありません。ナビの「レジ」を使います。所属がない経営者には「レジ」が出ませんが、対象店のお会計URLは権限上開けます。</p></div></div>
-</section>
-
-<section id="roles" class="section"><div class="section-head"><div><p class="eyebrow">03 / 役割の違い</p><h2>役割と、本人の権限。</h2></div></div><p>店長の権限は、その店の所属に対して有効です。カルテや作品は、役職による一括公開ではなく、担当・共有・引継ぎで範囲が決まります。</p>
-<div class="table-wrap"><table class="role-table"><caption>役割ごとの閲覧・操作の比較</caption><thead><tr><th scope="col">対象</th><th scope="col">経営者</th><th scope="col">店長</th><th scope="col">スタイリスト</th></tr></thead><tbody>
-<tr><th scope="row">最初の画面</th><td>予約・全店</td><td>予約・所属店</td><td>予約・所属店</td></tr>
-<tr><th scope="row">予約・不在</th><td>全店の閲覧・変更</td><td>所属店。営業時間外の登録も可</td><td>所属店。営業時間外の強行は不可</td></tr>
-<tr><th scope="row">カルテの閲覧</th><td>役割だけでは不可。担当・有効な共有等がある場合のみ</td><td>自分が担当／有効な共有・引継ぎ等の範囲</td><td>自分が担当／有効な共有・引継ぎ等の範囲</td></tr>
-<tr><th scope="row">施術記録・会計の保存</th><td>役割だけでは不可</td><td>持ち主・期間内の一時引継ぎ先・条件を満たす予約担当</td><td>店長と同じ条件</td></tr>
-<tr><th scope="row">引継ぎの作成</th><td>代理の一時引継ぎ可。理由必須</td><td>持ち主本人として一時・恒久</td><td>持ち主本人として一時・恒久</td></tr>
-<tr><th scope="row">共有・写真削除</th><td>役割で他人の共有・写真削除はできない</td><td>共有は自分の資源。来店写真の削除は持ち主のみ</td><td>店長と同じ条件</td></tr>
-<tr><th scope="row">自分の成績・給与</th><td>本人分と社員別の集計を閲覧</td><td>本人分。店長権限で他人の給与は見えない</td><td>本人分</td></tr>
-<tr><th scope="row">会社の損益・帳簿</th><td>全体を閲覧</td><td>在籍社員の同意と設定された開示範囲による</td><td>店長と同じ条件</td></tr>
-<tr><th scope="row">口座・お客様の年額一覧</th><td>閲覧可。年額一覧にカルテ本文は含まない</td><td>不可</td><td>不可</td></tr>
-<tr><th scope="row">固定資産・リース・給与起票</th><td>操作可</td><td>不可</td><td>不可</td></tr>
-<tr><th scope="row">レジ締め・入金</th><td>全店</td><td>店長として所属する店</td><td>不可</td></tr>
-<tr><th scope="row">店のチャット</th><td colspan="3">準備中。現時点では全役割とも画面なし</td></tr>
-</tbody></table></div>
-<p class="note">閲覧共有は書き込み権限を増やしません。恒久引継ぎの元担当は、閲覧を残す設定がある場合に読めます。代打の記録作成とカルテ閲覧は別判定です。スマホでは他人の予約は閲覧のみになる表示上の制限もあります。</p>
-<div class="callout"><h3>会社の同意は、段階別</h3><p>損益は在籍社員全員の有効な同意と会社側の設定に応じて、粗利まで・営業利益まで・全体に分かれます。帳簿は別の同意です。同意前の仕訳は本人に帰属する行のみ。口座や他人の給与明細まで公開されるわけではありません。</p></div>
-</section>
-
-<section id="patterns" class="section"><div class="section-head"><div><p class="eyebrow">04 / 表示の型</p><h2>同じ仕事を、3つの幅で。</h2></div><span class="pill">PC / iPad / スマホ</span></div><p>端末名は幅の目安です。予約は700・1200px、カルテの札は600・1024px、お会計は600・1100pxが境界です。会社・口座・経費は680pxでも配置が変わるため、画面ごとの境目を下にまとめています。</p>
-<div class="device-grid"><article class="device-card"><div class="device-icon pc" aria-hidden="true"></div><h3>PC</h3><p class="range">予約：1200px以上</p><dl><dt>ナビ</dt><dd>丸いリンクを横に配置。幅に応じて折り返し。</dd><dt>予約</dt><dd>既定は週表示。日・週・リストを切り替え。空き枠をクリックして予約作成。</dd><dt>カルテ</dt><dd>1024px超で札4列。履歴の写真と文は820px超で横並び。</dd><dt>会計・表</dt><dd>1100px超で会計・仕訳・今月の3列。列比は1：1.15：1。金額は右寄せ。</dd></dl></article>
-<article class="device-card"><div class="device-icon ipad" aria-hidden="true"></div><h3>iPad</h3><p class="range">予約：700〜1199px</p><dl><dt>ナビ</dt><dd>PCと同じリンク。折り返してタップ範囲を確保。</dd><dt>予約</dt><dd>既定は日表示。担当2列が見える幅で、残りは枠内をスクロール。空き枠をタップ。</dd><dt>カルテ</dt><dd>601〜1024pxで札2列。820px以下では履歴の写真と文を縦積み。</dd><dt>会計・表</dt><dd>601〜1100pxで会計と今月の2列、下に仕訳。広い表は枠内で横スクロール。</dd></dl></article>
-<article class="device-card"><div class="device-icon phone" aria-hidden="true"></div><h3>スマホ</h3><p class="range">予約：699px以下</p><dl><dt>ナビ</dt><dd>同じリンクが折り返す。ハンバーガーメニューへの切り替えはない。</dd><dt>予約</dt><dd>今日・明日のリスト。自分の予約が中心。他人の予約は閲覧のみ。作成・変更は全画面。</dd><dt>カルテ</dt><dd>600px以下で札1列。希望・前・後の写真3枠は維持。「前回」は最新の来店。</dd><dt>会計・表</dt><dd>600px以下で会計・仕訳・今月をリンク切り替え。共通の会計表は列名つきの縦の札に。</dd></dl></article></div>
-<p class="note">スタッフナビの項目は「予約・お客様・自分・作品・経費・レジ・会社」。「レジ」は所属がある場合だけです。「見せる」・作品の「お客様へ」・印刷ではナビを隠します。</p>
-<div class="subhead"><h3>会計・会社・経費の幅の境目</h3><p>ブラウザーの表示幅で切り替わります。</p></div>
-<div class="table-wrap"><table class="layout-table"><caption>画面ごとの幅と配置</caption><thead><tr><th scope="col">画面・部分</th><th scope="col">幅と配置</th></tr></thead><tbody>
-<tr><th scope="row">お会計</th><td>1100px超：会計・仕訳・今月を1：1.15：1の3列。600px超〜1100px：会計と今月を等幅の2列、仕訳は下段いっぱい。600px以下：会計・仕訳・今月をリンクで切り替え。</td></tr>
-<tr><th scope="row">会社の上段</th><td>1100px超：損益・帰属・売上推移を1：1.15：1の3列。680px超〜1100px：2列で最後の区画は横幅いっぱい。680px以下：1列。帰属は経営者のみで、各区画は取得状態・権限に応じて表示。</td></tr>
-<tr><th scope="row">会社の帳簿</th><td>680px超：2列。貸借は左の2段にまたがり、口座・試算表は右、仕訳帳は下段いっぱい。680px以下：1列。口座は経営者で取得に成功した場合だけ表示。</td></tr>
-<tr><th scope="row">口座の上段</th><td>680px超：残高・今月入金・今月出金を1.3：1：1の3列。680px以下：1列。下には期間を選ぶ操作と入出金の表。</td></tr>
-<tr><th scope="row">経費一覧</th><td>680px超：2列、680px以下：1列の札。各札は日付・種類を左、金額を右に配置。下書き・起票済み・差し戻しを札で示し、差し戻しには赤系の色を使用。</td></tr>
-<tr><th scope="row">共通の会計表</th><td>600px以下：各行を列名つきの縦の札に変更。会社・口座の格子が1列になる680pxとは別の境目。お会計・会社・口座などの詰めた表は、600px超でも表の最小幅を設けず枠に収める。</td></tr>
-</tbody></table></div>
-
-<div class="subhead"><h3>画面の画像</h3><p>画像未登録でも、画面名と想定幅を表示します。</p></div>
-<div class="image-controls"><label for="screen-select">画面<select id="screen-select"></select></label><div class="width-buttons" role="group" aria-label="画像の幅"><button type="button" data-device="pc" aria-pressed="true">PC</button><button type="button" data-device="ipad" aria-pressed="false">iPad</button><button type="button" data-device="phone" aria-pressed="false">スマホ</button></div></div>
-<div id="image-gallery" class="image-gallery"></div><p class="note">画像名は <code>images/画面ID-pc.png</code>・<code>images/画面ID-ipad.png</code>・<code>images/画面ID-phone.png</code>。IDは画面一覧に記載しています。画像枠は実画面の再現ではなく、あとから撮影画像を入れるための枠です。</p>
-
-<div class="subhead"><h3>状態の見せ方</h3><p>以下は実装にある文言と形を説明する見本です。</p></div>
-<div class="state-grid"><article class="state"><span class="state-number">01</span><h4>ダイアログ</h4><div class="mini-dialog"><b>予約</b><span class="mini-line"></span><span class="mini-line short"></span><span class="mini-button">保存</span></div><p>PC・iPadは角丸の枠、スマホは全画面。開いたら枠へフォーカス。Escapeか閉じる操作で終了。背景タップでは閉じません。操作の足元は固定です。</p></article>
-<article class="state"><span class="state-number">02</span><h4>空の状態</h4><div class="state-preview">待ちなし</div><p>会計は「待ちなし」、作品は「作品なし」、共通の会計表は「記録なし」。空のカルテ札には点線の枠を使います。経費一覧の「なし」は取得に成功した0件の場合だけに表示します。</p></article>
-<article class="state"><span class="state-number">03</span><h4>読み込み中</h4><div class="state-preview"><span class="load-dot" aria-hidden="true"></span>読込中</div><p>予約・会計・作品・共有・経費などで「読込中」。予約の端末判定前は「準備中」。経費一覧の取得失敗は「経費を読み込めませんでした」。読み込み中・失敗時には「なし」を表示しません。</p></article>
-<article class="state"><span class="state-number">04</span><h4>閲覧の拒否</h4><div class="state-preview denied">権限がありません</div><p>一般の拒否はページの権限なし表示。カルテは許可された範囲で担当への共有依頼を案内。会社の数字は「同意待ち」、個人集計は「権限なし」。</p></article></div>
-<div class="callout"><h3>v3.1の反映範囲</h3><p>角丸8〜16px、控えめな影、生成り・深緑・セージの色は共通の変数を参考にしています。ナビ・予約・カルテの整列、カルテ末尾への引継ぎ移動に加え、PR4で自分のダッシュボードとお会計の札・余白・数字の配置を調整。お会計の列比は1：1.15：1となり、顧客名と見込み額を横に並べ、その下に時刻・担当・予定をまとめています。PR5では会社の損益・帰属・推移と帳簿、口座の残高・入出金を格子で配置。経費一覧は日付・種類・金額・状態を札にまとめ、経費入力も共通の枠と選択表示に合わせています。反映範囲は現在の部品とCSSで確認できるものです。</p></div>
-</section>
-
-<section id="status" class="section"><div class="section-head"><div><p class="eyebrow">05 / 準備中・確認範囲</p><h2>いま、あるものを伝える。</h2></div></div><div class="two-col"><article class="status-card"><span class="pill">準備中</span><h3>店のチャット</h3><p>ルーム・メッセージなどの土台のAPIと権限判定はあります。画面のルート、画面部品、ナビの入口はありません。遷移図の点線は将来の接続を保証しません。</p></article><article class="status-card"><span class="pill">掲載対象外</span><h3>実装にない操作</h3><p>役割ごとに異なるログイン直後の画面、予約から会計への直接ボタン、予約のドラッグ移動、現在時刻の線、カルテ横の全顧客一覧、音声での自動予約、公開予約フォーム、AI相談、お客様自身のログイン画面は載せていません。</p></article></div><details class="evidence"><summary>確認した根拠と、確認できていないこと</summary><div><p>確認日：2026年10月26日。読み取り時点の最新の <code>origin/main</code>（<code>05cbca8</code>）を使用しました。</p><ul><li>画面とURL：<code>src/app/**/page.tsx</code>・<code>layout.tsx</code>。</li><li>役割と範囲：<code>src/features/access</code> の権限判定・ナビ・ログイン。会社の開示判定、会計と引継ぎのサービスも照合。</li><li>表示：予約・カルテ・履歴・ダッシュボード・会計・会社・口座・共通の会計表・共有・作品・経費の主要部品とCSS。PR4（#82）・PR5（#83）の差分も照合。</li><li>方針：<code>docs/requirements/product.md</code>、<code>docs/rules/ui.md</code>、<code>docs/plans/2026-10-25-v3-1-design-alignment.md</code>。計画より実装を優先。</li></ul><p>本体の起動・ログイン・実データ・通信先・実機での操作は確認していません。現在有効な共有、社員の同意、通知の利用可否、画像の取得成否も未確認です。撮影画像の登録状況と内容は今回の確認対象外です。この案内の表は権限ルールを示し、個別アカウントの現在の許可を保証するものではありません。</p></div></details></section>
-<footer>美容室の業務アプリ <span>／</span> 画面の案内 <a href="#">先頭へ ↑</a></footer>
-</main></div>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>美容室の業務アプリ デモ</title>
+<style>
+:root{--paper:#f4efe4;--ink:#2b2420;--muted:#5e5750;--head:#2f4a3a;--rule:#c9c6b4}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:'Yu Gothic Medium','Yu Gothic',Meiryo,sans-serif}
+header{padding:20px 16px;max-width:1400px;margin:auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+h1{font-family:'Yu Mincho',serif;font-size:22px;margin:0;color:var(--head)}
+.sw{display:flex;gap:4px;background:#dfe3d3;border-radius:999px;padding:3px}
+.sw input{position:absolute;opacity:0}.sw label{padding:8px 18px;border-radius:999px;cursor:pointer;min-height:40px;display:flex;align-items:center}
+.sw input:checked+label{background:var(--head);color:var(--paper)}
+main{max-width:1400px;margin:auto;padding:0 16px 40px;display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+figure{margin:0;border:1px solid var(--rule);border-radius:14px;overflow:hidden;background:#fff}
+figcaption{padding:10px 14px;font-size:14px;color:var(--head);border-bottom:1px solid var(--rule)}
+img{display:none;width:100%;height:340px;object-fit:cover;object-position:top}
+img:hover{object-fit:contain;background:#eee}
+body:has(#w-pc:checked) img.pc,body:has(#w-ipad:checked) img.ipad,body:has(#w-phone:checked) img.phone{display:block}
+footer{text-align:center;color:var(--muted);font-size:12px;padding-bottom:30px}
+</style></head>
+<body><header><h1>美容室の業務アプリ</h1><div class="sw"><input type="radio" name="w" id="w-pc" checked><label for="w-pc">PC</label><input type="radio" name="w" id="w-ipad"><label for="w-ipad">iPad</label><input type="radio" name="w" id="w-phone"><label for="w-phone">スマホ</label></div></header>
+<main>
+<figure><figcaption>ログイン</figcaption><img class="pc" src="images/login-pc.png" alt="ログイン（PC）" loading="lazy"><img class="ipad" src="images/login-ipad.png" alt="ログイン（iPad）" loading="lazy"><img class="phone" src="images/login-phone.png" alt="ログイン（スマホ）" loading="lazy"></figure>
+<figure><figcaption>予約</figcaption><img class="pc" src="images/calendar-pc.png" alt="予約（PC）" loading="lazy"><img class="ipad" src="images/calendar-ipad.png" alt="予約（iPad）" loading="lazy"><img class="phone" src="images/calendar-phone.png" alt="予約（スマホ）" loading="lazy"></figure>
+<figure><figcaption>不在</figcaption><img class="pc" src="images/absences-pc.png" alt="不在（PC）" loading="lazy"><img class="ipad" src="images/absences-ipad.png" alt="不在（iPad）" loading="lazy"><img class="phone" src="images/absences-phone.png" alt="不在（スマホ）" loading="lazy"></figure>
+<figure><figcaption>お客様</figcaption><img class="pc" src="images/customers-pc.png" alt="お客様（PC）" loading="lazy"><img class="ipad" src="images/customers-ipad.png" alt="お客様（iPad）" loading="lazy"><img class="phone" src="images/customers-phone.png" alt="お客様（スマホ）" loading="lazy"></figure>
+<figure><figcaption>カルテ</figcaption><img class="pc" src="images/chart-pc.png" alt="カルテ（PC）" loading="lazy"><img class="ipad" src="images/chart-ipad.png" alt="カルテ（iPad）" loading="lazy"><img class="phone" src="images/chart-phone.png" alt="カルテ（スマホ）" loading="lazy"></figure>
+<figure><figcaption>前回</figcaption><img class="pc" src="images/last-pc.png" alt="前回（PC）" loading="lazy"><img class="ipad" src="images/last-ipad.png" alt="前回（iPad）" loading="lazy"><img class="phone" src="images/last-phone.png" alt="前回（スマホ）" loading="lazy"></figure>
+<figure><figcaption>見せる</figcaption><img class="pc" src="images/show-pc.png" alt="見せる（PC）" loading="lazy"><img class="ipad" src="images/show-ipad.png" alt="見せる（iPad）" loading="lazy"><img class="phone" src="images/show-phone.png" alt="見せる（スマホ）" loading="lazy"></figure>
+<figure><figcaption>お会計</figcaption><img class="pc" src="images/checkout-pc.png" alt="お会計（PC）" loading="lazy"><img class="ipad" src="images/checkout-ipad.png" alt="お会計（iPad）" loading="lazy"><img class="phone" src="images/checkout-phone.png" alt="お会計（スマホ）" loading="lazy"></figure>
+<figure><figcaption>レジ締め</figcaption><img class="pc" src="images/cash-pc.png" alt="レジ締め（PC）" loading="lazy"><img class="ipad" src="images/cash-ipad.png" alt="レジ締め（iPad）" loading="lazy"><img class="phone" src="images/cash-phone.png" alt="レジ締め（スマホ）" loading="lazy"></figure>
+<figure><figcaption>自分</figcaption><img class="pc" src="images/me-pc.png" alt="自分（PC）" loading="lazy"><img class="ipad" src="images/me-ipad.png" alt="自分（iPad）" loading="lazy"><img class="phone" src="images/me-phone.png" alt="自分（スマホ）" loading="lazy"></figure>
+<figure><figcaption>共有・引継ぎ</figcaption><img class="pc" src="images/shares-pc.png" alt="共有・引継ぎ（PC）" loading="lazy"><img class="ipad" src="images/shares-ipad.png" alt="共有・引継ぎ（iPad）" loading="lazy"><img class="phone" src="images/shares-phone.png" alt="共有・引継ぎ（スマホ）" loading="lazy"></figure>
+<figure><figcaption>同意</figcaption><img class="pc" src="images/consents-pc.png" alt="同意（PC）" loading="lazy"><img class="ipad" src="images/consents-ipad.png" alt="同意（iPad）" loading="lazy"><img class="phone" src="images/consents-phone.png" alt="同意（スマホ）" loading="lazy"></figure>
+<figure><figcaption>通知</figcaption><img class="pc" src="images/notifications-pc.png" alt="通知（PC）" loading="lazy"><img class="ipad" src="images/notifications-ipad.png" alt="通知（iPad）" loading="lazy"><img class="phone" src="images/notifications-phone.png" alt="通知（スマホ）" loading="lazy"></figure>
+<figure><figcaption>作品</figcaption><img class="pc" src="images/portfolio-pc.png" alt="作品（PC）" loading="lazy"><img class="ipad" src="images/portfolio-ipad.png" alt="作品（iPad）" loading="lazy"><img class="phone" src="images/portfolio-phone.png" alt="作品（スマホ）" loading="lazy"></figure>
+<figure><figcaption>同僚の作品</figcaption><img class="pc" src="images/colleague-pc.png" alt="同僚の作品（PC）" loading="lazy"><img class="ipad" src="images/colleague-ipad.png" alt="同僚の作品（iPad）" loading="lazy"><img class="phone" src="images/colleague-phone.png" alt="同僚の作品（スマホ）" loading="lazy"></figure>
+<figure><figcaption>作品をお客様へ</figcaption><img class="pc" src="images/customer-view-pc.png" alt="作品をお客様へ（PC）" loading="lazy"><img class="ipad" src="images/customer-view-ipad.png" alt="作品をお客様へ（iPad）" loading="lazy"><img class="phone" src="images/customer-view-phone.png" alt="作品をお客様へ（スマホ）" loading="lazy"></figure>
+<figure><figcaption>経費</figcaption><img class="pc" src="images/expenses-pc.png" alt="経費（PC）" loading="lazy"><img class="ipad" src="images/expenses-ipad.png" alt="経費（iPad）" loading="lazy"><img class="phone" src="images/expenses-phone.png" alt="経費（スマホ）" loading="lazy"></figure>
+<figure><figcaption>経費の入力</figcaption><img class="pc" src="images/expense-new-pc.png" alt="経費の入力（PC）" loading="lazy"><img class="ipad" src="images/expense-new-ipad.png" alt="経費の入力（iPad）" loading="lazy"><img class="phone" src="images/expense-new-phone.png" alt="経費の入力（スマホ）" loading="lazy"></figure>
+<figure><figcaption>会社</figcaption><img class="pc" src="images/company-pc.png" alt="会社（PC）" loading="lazy"><img class="ipad" src="images/company-ipad.png" alt="会社（iPad）" loading="lazy"><img class="phone" src="images/company-phone.png" alt="会社（スマホ）" loading="lazy"></figure>
+<figure><figcaption>口座</figcaption><img class="pc" src="images/bank-pc.png" alt="口座（PC）" loading="lazy"><img class="ipad" src="images/bank-ipad.png" alt="口座（iPad）" loading="lazy"><img class="phone" src="images/bank-phone.png" alt="口座（スマホ）" loading="lazy"></figure>
+<figure><figcaption>お客様の年額</figcaption><img class="pc" src="images/spend-pc.png" alt="お客様の年額（PC）" loading="lazy"><img class="ipad" src="images/spend-ipad.png" alt="お客様の年額（iPad）" loading="lazy"><img class="phone" src="images/spend-phone.png" alt="お客様の年額（スマホ）" loading="lazy"></figure>
+<figure><figcaption>社員別</figcaption><img class="pc" src="images/staff-summary-pc.png" alt="社員別（PC）" loading="lazy"><img class="ipad" src="images/staff-summary-ipad.png" alt="社員別（iPad）" loading="lazy"><img class="phone" src="images/staff-summary-phone.png" alt="社員別（スマホ）" loading="lazy"></figure>
+<figure><figcaption>固定資産</figcaption><img class="pc" src="images/assets-pc.png" alt="固定資産（PC）" loading="lazy"><img class="ipad" src="images/assets-ipad.png" alt="固定資産（iPad）" loading="lazy"><img class="phone" src="images/assets-phone.png" alt="固定資産（スマホ）" loading="lazy"></figure>
+<figure><figcaption>リース</figcaption><img class="pc" src="images/leases-pc.png" alt="リース（PC）" loading="lazy"><img class="ipad" src="images/leases-ipad.png" alt="リース（iPad）" loading="lazy"><img class="phone" src="images/leases-phone.png" alt="リース（スマホ）" loading="lazy"></figure>
+<figure><figcaption>給与</figcaption><img class="pc" src="images/payroll-pc.png" alt="給与（PC）" loading="lazy"><img class="ipad" src="images/payroll-ipad.png" alt="給与（iPad）" loading="lazy"><img class="phone" src="images/payroll-phone.png" alt="給与（スマホ）" loading="lazy"></figure>
+<figure><figcaption>開示</figcaption><img class="pc" src="images/disclosure-pc.png" alt="開示（PC）" loading="lazy"><img class="ipad" src="images/disclosure-ipad.png" alt="開示（iPad）" loading="lazy"><img class="phone" src="images/disclosure-phone.png" alt="開示（スマホ）" loading="lazy"></figure>
+<figure><figcaption>予約表の印刷</figcaption><img class="pc" src="images/print-pc.png" alt="予約表の印刷（PC）" loading="lazy"><img class="ipad" src="images/print-ipad.png" alt="予約表の印刷（iPad）" loading="lazy"><img class="phone" src="images/print-phone.png" alt="予約表の印刷（スマホ）" loading="lazy"></figure>
+</main>
+<footer>データはすべて架空です</footer>
 </body></html>
