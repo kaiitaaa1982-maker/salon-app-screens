@@ -64,8 +64,8 @@ screens.forEach(([id,name]) => Object.entries(deviceNames).forEach(([device,labe
   const title = document.createElement('b'); title.textContent = name;
   const width = document.createElement('span'); width.textContent = `${label} ／ ${id}`; caption.append(title,width);
   const body = document.createElement('div'); body.className = 'shot-body';
-  const img = document.createElement('img'); img.alt = `${name}の${label}表示`; img.loading = 'lazy'; img.hidden = true;
-  const placeholder = document.createElement('div'); placeholder.className = 'placeholder';
+  const img = document.createElement('img'); img.alt = `${name}の${label}表示`; img.loading = 'lazy';
+  const placeholder = document.createElement('div'); placeholder.className = 'placeholder'; placeholder.hidden = true;
   const symbol = document.createElement('span'); symbol.className = 'placeholder-symbol'; symbol.textContent = '▧'; symbol.setAttribute('aria-hidden','true');
   const message = document.createElement('b'); message.textContent = '画像未登録';
   const description = document.createElement('span'); description.textContent = `${name} ／ ${label}`;
